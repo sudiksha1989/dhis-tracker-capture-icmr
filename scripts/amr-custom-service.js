@@ -96,20 +96,32 @@ angular.module('trackerCaptureServices')
                 return def.promise;
             },
             getFromDataStore: function (teiKey) {
-                var def = $q.defer();
-                var url = '../api/dataStore/id/' + teiKey;
-                $http.get(url).then(function (response) {
-                    def.resolve(response.data);
-                }).catch((error)=>def.resolve(error))
-                return def.promise;
+                var def = $.Deferred();
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    async:false,
+                    contentType: "application/json",
+                    url: '../api/dataStore/id/' + teiKey,
+                    success: function (data) {
+                        def.resolve(data);
+                    }
+                }).catch((error)=>def.resolve(error));
+                return def
             },
             deleteFromDataStore: function (teiKey) {
-                var def = $q.defer();
-                var url = '../api/dataStore/id/' + teiKey;
-                $http.delete(url).then(function (response) {
-                    def.resolve(response.data);
-                });
-                return def.promise;
+                var def = $.Deferred();
+                $.ajax({
+                    type: "DELETE",
+                    dataType: "json",
+                    async:false,
+                    contentType: "application/json",
+                    url: '../api/dataStore/id/' + teiKey,
+                    success: function (data) {
+                        def.resolve(data);
+                    }
+                }).catch((error)=>def.resolve(error));
+                return def
             }
         };
     });
